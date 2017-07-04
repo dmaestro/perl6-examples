@@ -71,18 +71,15 @@ subtest {
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob006";
 
-skip("prob007 takes too long in tests") if $skip;
-unless $skip {
-    subtest {
-        plan 1;
+subtest {
+    plan 1;
 
-        my $problem = "prob007";
-        my @authors = <polettix>;
-        my $expected-output = 104743;
+    my $problem = "prob007";
+    my @authors = <polettix>;
+    my $expected-output = 104743;
 
-        check-example-solutions($problem, $expected-output, @authors)
-    }, "prob007";
-}
+    check-example-solutions($problem, $expected-output, @authors)
+}, "prob007";
 
 subtest {
     plan 2;
