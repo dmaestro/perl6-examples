@@ -89,7 +89,7 @@ subtest {
 
     my $problem = "prob008";
     my @authors = <duff duff2>;
-    my $expected-output = 40824;
+    my $expected-output = 23514624000;
 
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob008";
