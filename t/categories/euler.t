@@ -7,10 +7,10 @@ plan 67;
 my $skip = %*ENV<PERL6_EXAMPLES_NOSKIP> ?? False !! True;
 
 subtest {
-    plan 5;
+    plan 6;
 
     my $problem = "prob001";
-    my @authors = <cspencer eric256 grondilu hexmode unobe>;
+    my @authors = <cspencer dmaestro eric256 grondilu hexmode unobe>;
     my $expected-output = 233168;
 
     for @authors -> $author {
@@ -22,50 +22,50 @@ subtest {
 }, "prob001";
 
 subtest {
-    plan 3;
+    plan 4;
 
     my $problem = "prob002";
-    my @authors = <eric256 gerdr hexmode>;
+    my @authors = <dmaestro eric256 gerdr hexmode>;
     my $expected-output = 4613732;
 
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob002";
 
 subtest {
-    plan 4;
+    plan 5;
 
     my $problem = "prob003";
-    my @authors = <eric256 gerdr hexmode lanny>;
+    my @authors = <dmaestro eric256 gerdr hexmode lanny>;
     my $expected-output = 6857;
 
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob003";
 
 subtest {
-    plan 2;
+    plan 3;
 
     my $problem = "prob004";
-    my @authors = <unobe xfix>;
+    my @authors = <dmaestro unobe xfix>;
     my $expected-output = 906609;
 
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob004";
 
 subtest {
-    plan 2;
+    plan 3;
 
     my $problem = "prob005";
-    my @authors = <unobe xfix>;
+    my @authors = <dmaestro unobe xfix>;
     my $expected-output = 232792560;
 
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob005";
 
 subtest {
-    plan 1;
+    plan 2;
 
     my $problem = "prob006";
-    my @authors = <polettix>;
+    my @authors = <dmaestro polettix>;
     my $expected-output = 25164150;
 
     check-example-solutions($problem, $expected-output, @authors)
@@ -82,10 +82,10 @@ subtest {
 }, "prob007";
 
 subtest {
-    plan 2;
+    plan 3;
 
     my $problem = "prob008";
-    my @authors = <duff duff2>;
+    my @authors = <dmaestro duff duff2>;
     my $expected-output = 23514624000;
 
     check-example-solutions($problem, $expected-output, @authors)
@@ -101,13 +101,13 @@ subtest {
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob009";
 
-skip("prob010-polettix.pl takes too long to run") if $skip;
+skip("prob010 takes too long to run") if $skip;
 unless $skip {
     subtest {
-        plan 1;
+        plan 2;
 
         my $problem = "prob010";
-        my @authors = <polettix>;
+        my @authors = <dmaestro polettix>;
         my $expected-output = 142913828922;
 
         check-example-solutions($problem, $expected-output, @authors)
