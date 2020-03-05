@@ -1,0 +1,70 @@
+#!/usr/bin/env perl
+use 5.026;
+use warnings;
+use experimental 'signatures';
+
+use HTML::TreeBuilder;
+use LWP::UserAgent;
+
+use Text::Xslate qw(mark_raw);
+use Readonly;
+
+my $tt = Text::Xslate->new( syntax => 'TTerse' );
+
+Readonly my $EULER_TEMPLATE => 'template.tt';
+Readonly my $AUTHOR         => 'Doug Schrag';
+Readonly my $HANDLE         => 'dmaestro';
+my $prob_no = $ARGV[0] // 1;
+my $prob = sprintf( '%03d', $prob_no );
+
+my $output_name = "prob$prob-$HANDLE.pl";
+open my $doc, '>:encoding(UTF-8)', $output_name;
+
+warn "Writing $output_name\n";
+print { $doc } solution_content($prob_no);
+
+sub solution_content($prob_no) {
+    my $solution_url =
+        'https://github.com/dmaestro/project-euler-play/blob/';
+    my $raw_solution_url =
+        'https://raw.githubusercontent.com/dmaestro/project-euler-play/';
+    my $solution_name = "master/perl6_solutions/e$prob_no.pl6";
+
+    my $response = LWP::UserAgent->new()->get("https://projecteuler.net/Problem=$prob_no");
+    warn "Status: " . $response->code, "\n";
+    my $doc = HTML::TreeBuilder->new()->parse_content($response->content);
+    my $title = $doc->look_down( _tag => 'div', id => 'content')->look_down(_tag => 'h2');
+
+    my $response2 = LWP::UserAgent->new()->get($raw_solution_url.$solution_name);
+    warn "Status: " . $response2->code, "\n";
+    my @code = split /(?<=\n)/, $response2->content;
+
+    my @description;
+    for my $line (@code) {
+        next if $line =~ /^use v6/;
+        last if $line =~ /^[^#\s]/;
+        push @description, $line;
+        $line = '';
+    }
+
+    my $last_desc;
+    for (@description) {
+        my $current = $_;
+        if (defined $last_desc && /^\s$/) {
+            $_ = '' if $current eq $last_desc;
+        }
+        $last_desc = $current;
+        s/^#(\h|$)//;
+    }
+
+    my $description = join '', @description;
+
+    return $tt->render($EULER_TEMPLATE, {
+        Title   => $title->as_text,
+        Problem => $prob_no,
+        Author  => $AUTHOR,
+        Description => $description,
+        Url     => $solution_url.$solution_name,
+        Code    => mark_raw( join('', @code) ),
+    });
+}

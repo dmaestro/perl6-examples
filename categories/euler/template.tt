@@ -1,0 +1,18 @@
+use v6;
+
+=begin pod
+
+=TITLE [% Title %]
+
+=AUTHOR [% Author %]
+
+L<https://projecteuler.net/problem=[% Problem %]>
+
+[% Description -%]
+L<[% Url %]|Solution>
+
+=end pod
+
+# perl6 code solving the given problem
+
+[% Code -%]
